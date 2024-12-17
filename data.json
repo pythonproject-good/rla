@@ -1,14 +1,10 @@
 {
-    "passwords": {
-        "user": {
-            "can_write_notice": true
-        },
-        "user2": {
-            "balance": 0,
-            "can_see_notice": false,
-            "notice": ""
+    "passwords": {},
+    "company_balance": 500,
+    "notices": [
+        {
+            "notice": "11",
+            "comments": []
         }
-    },
-    "company_balance": 0,
-    "notices": []
+    ]
 }

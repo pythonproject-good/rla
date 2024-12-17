@@ -1,9 +1,12 @@
+# app.py
 from flask import Flask, render_template, request, redirect, url_for, session
 import json
 import os
 
+
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
+app.jinja_env.globals.update(enumerate=enumerate)
 
 DATA_FILE = "data.json"
 
@@ -106,8 +109,15 @@ def admin():
 
         # 회사 잔액 수정
         elif action == "update_balance":
-            balance = request.form.get("balance", type=int)
-            data["company_balance"] = balance
+            balance = request.form.get("balance")
+            if balance[0] == '-':
+                balance_value = int(balance[1:])  # 부호를 제외한 값만 정수로 변환
+                data["company_balance"] -= balance_value
+            elif balance[0] == '+':
+                balance_value = int(balance[1:])  # 부호를 제외한 값만 정수로 변환
+                data["company_balance"] += balance_value
+            else:
+                data["company_balance"] += int(balance)  # 부호 없이 그냥 값만 더함
 
         save_data(data)
     return render_template("admin.html", users=data["passwords"], balance=data["company_balance"])
