@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 페이지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>관리자 페이지</h1>
+
+        <h2>회사 잔액 수정</h2>
+        <form method="POST">
+            <input type="hidden" name="action" value="update_balance">
+            <input type="number" name="balance" value="{{ balance }}" required>
+            <button type="submit">잔액 수정</button>
+        </form>
+
+        <h2>사용자 관리</h2>
+        <form method="POST">
+            <input type="hidden" name="action" value="add_user">
+            비밀번호: <input type="text" name="new_password" required>
+            공지사항 작성 권한:
+            <input type="radio" name="can_write_notice" value="yes"> 예
+            <input type="radio" name="can_write_notice" value="no" checked> 아니오
+            <button type="submit">사용자 추가</button>
+        </form>
+
+        <h3>사용자 삭제</h3>
+        <form method="POST">
+            <input type="hidden" name="action" value="delete_user">
+            삭제할 비밀번호: <input type="text" name="delete_password" required>
+            <button type="submit">삭제</button>
+        </form>
+
+        <a href="{{ url_for('logout') }}">로그아웃</a>
+    </div>
+</body>
+</html>
