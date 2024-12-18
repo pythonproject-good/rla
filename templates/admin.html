@@ -1,46 +1,49 @@
-<!--templates/admin.html-->
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>관리자 페이지</title>
+    <title>Admin Page</title>
 </head>
 <body>
-    <h1>관리자 페이지</h1>
+    <h1>Admin Page</h1>
+    <p>Current Balance: {{ balance }}</p>
 
-    <h2>잔액 수정</h2>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <form method="POST">
-        <input type="hidden" name="action" value="update_balance">
-        회사 잔액: <input type="number" name="balance" value="{{ balance }}" required>
-        <button type="submit">잔액 수정</button>
-    </form>
-
-    <h2>사용자 관리</h2>
+    <h2>Add User</h2>
     <form method="POST">
         <input type="hidden" name="action" value="add_user">
-        비밀번호: <input type="text" name="new_password" required>
-        공지사항 작성 가능:
-        <input type="radio" name="can_write_notice" value="yes"> 예
-        <input type="radio" name="can_write_notice" value="no" checked> 아니오
-        <button type="submit">사용자 추가</button>
+        <label for="new_password">New Password:</label>
+        <input type="text" name="new_password" id="new_password" required>
+        <label for="can_write_notice">Can Write Notice:</label>
+        <select name="can_write_notice" id="can_write_notice">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+        <button type="submit">Add</button>
     </form>
 
-    <h3>사용자 목록</h3>
+    <h2>Delete User</h2>
+    <form method="POST">
+        <input type="hidden" name="action" value="delete_user">
+        <label for="delete_password">Password to Delete:</label>
+        <input type="text" name="delete_password" id="delete_password" required>
+        <button type="submit">Delete</button>
+    </form>
+
+    <h2>Update Balance</h2>
+    <form method="POST">
+        <input type="hidden" name="action" value="update_balance">
+        <label for="balance">Change Balance:</label>
+        <input type="text" name="balance" id="balance" required>
+        <button type="submit">Update</button>
+    </form>
+
+    <h2>Users</h2>
     <ul>
-        {% for user in users %}
-            <li>{{ user }}</li>
+        {% for user, data in users.items() %}
+            <li>{{ user }} - Can Write Notice: {{ 'Yes' if data.can_write_notice else 'No' }}</li>
         {% endfor %}
     </ul>
 
-    <h3>사용자 삭제</h3>
-    <form method="POST">
-        <input type="hidden" name="action" value="delete_user">
-        삭제할 비밀번호: <input type="text" name="delete_password" required>
-        <button type="submit">삭제</button>
-    </form>
-
-    <a href="{{ url_for('logout') }}">로그아웃</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
 </body>
 </html>
