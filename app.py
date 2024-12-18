@@ -38,6 +38,10 @@ def save_data(data):
     with open(DATA_FILE, 'w') as f:
         json.dump(data, f, indent=4)
 
+@app.route('/healthcheck')
+def healthcheck():
+    return "App is alive!", 200
+
 
 # --------- 로그인 페이지 ----------
 @app.route("/", methods=["GET", "POST"])
