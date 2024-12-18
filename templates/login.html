@@ -1,21 +1,18 @@
-<!--templates/login.html-->
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로그인</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Login</title>
 </head>
 <body>
-    <div class="container">
-        <h1>로그인</h1>
-        {% if error %}
-            <p style="color: red;">{{ error }}</p>
-        {% endif %}
-        <form method="POST">
-            <input type="text" name="password" placeholder="비밀번호" required>
-            <button type="submit">로그인</button>
-        </form>
-    </div>
+    <h1>Login</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="POST">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+        <button type="submit">Login</button>
+    </form>
 </body>
 </html>
