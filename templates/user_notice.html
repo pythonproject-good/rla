@@ -1,40 +1,39 @@
-<!--templates/user_notice.html-->
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>공지사항</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>User Page</title>
 </head>
 <body>
-    <div class="container">
-        <h1>회사 잔액: {{ balance }}</h1>
-
-        {% if can_write_notice %}
-        <h2>공지사항 작성</h2>
+    <h1>Welcome!</h1>
+    <p>Current Balance: {{ balance }}</p>
+    
+    {% if can_write_notice %}
         <form method="POST">
-            <textarea name="notice" rows="4" placeholder="공지사항 내용을 입력하세요" required></textarea>
-            <button type="submit">작성</button>
+            <label for="notice">Add Notice:</label>
+            <input type="text" name="notice" id="notice" required>
+            <button type="submit">Submit</button>
         </form>
-        {% endif %}
+    {% endif %}
 
-        <h2>공지사항</h2>
+    <h2>Notices</h2>
+    <ul>
         {% for idx, notice in enumerate(notices) %}
-            <div class="notice">
+            <li>
                 <p>{{ notice.notice }}</p>
-                <h3>댓글</h3>
+                <form method="POST" action="{{ url_for('comment', notice_id=idx) }}">
+                    <input type="text" name="comment" placeholder="Add a comment" required>
+                    <button type="submit">Comment</button>
+                </form>
                 <ul>
                     {% for comment in notice.comments %}
                         <li>{{ comment }}</li>
                     {% endfor %}
                 </ul>
-                <form method="POST" action="{{ url_for('comment', notice_id=idx) }}">
-                    <input type="text" name="comment" placeholder="댓글 입력" required>
-                    <button type="submit">댓글 작성</button>
-                </form>
-            </div>
+            </li>
         {% endfor %}
-        <a href="{{ url_for('logout') }}">로그아웃</a>
-    </div>
+    </ul>
+    
+    <a href="{{ url_for('logout') }}">Logout</a>
 </body>
 </html>
